@@ -118,7 +118,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"assets/js/main.js":[function(require,module,exports) {
-function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
@@ -126,60 +126,38 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
 document.addEventListener("DOMContentLoaded", function () {
   var main = document.querySelector("main");
-  main.addEventListener('click', function (e) {
-    if (e.target.dataset.text) {
-      var postPontent = e.target.closest(".post-content");
-
-      if (postPontent.classList.contains("open")) {
-        postPontent.classList.remove("open");
-      } else {
-        postPontent.classList.add("open");
-      }
-    }
-  });
+  var modal = document.getElementById("modal");
+  var btnСloseModalWindow = document.querySelector(".close_modal_window");
+  var list = document.querySelectorAll("ol li span.dotted");
+  var form = document.querySelector("form");
+  var email = form.querySelector("#input-mail");
+  var emailError = form.querySelector("#input-mail + span.error");
+  var inputCross = form.querySelectorAll(".cross");
+  main.addEventListener("click", postTrigger);
 
   if (window.innerWidth <= 842) {
-    var postCont = main.querySelectorAll(".post-content");
-
-    var _iterator = _createForOfIteratorHelper(postCont),
-        _step;
-
-    try {
-      for (_iterator.s(); !(_step = _iterator.n()).done;) {
-        var p = _step.value;
-        p.classList.add('open');
-      }
-    } catch (err) {
-      _iterator.e(err);
-    } finally {
-      _iterator.f();
-    }
+    postsOpen();
   }
 
-  var modal = document.getElementById("modal");
-  var span = document.getElementsByClassName("close_modal_window")[0];
-  var list = document.querySelectorAll("ol li span.dotted");
-
-  var _iterator2 = _createForOfIteratorHelper(list),
-      _step2;
+  var _iterator = _createForOfIteratorHelper(list),
+      _step;
 
   try {
-    for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-      var l = _step2.value;
-
-      l.onclick = function () {
-        modal.style.display = "block";
-      };
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      var l = _step.value;
+      l.addEventListener("click", function () {
+        return modal.style.display = "block";
+      });
     }
   } catch (err) {
-    _iterator2.e(err);
+    _iterator.e(err);
   } finally {
-    _iterator2.f();
+    _iterator.f();
   }
 
-  span.onclick = function () {
-    modal.style.display = "none";
-  };
+  btnСloseModalWindow.addEventListener("click", function () {
+    return modal.style.display = "none";
+  });
 
   window.onclick = function (event) {
     if (event.target == modal) {
@@ -187,36 +165,26 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   };
 
-  var form = document.getElementsByTagName("form")[0];
-  var email = document.getElementById("input-mail");
-  var name = document.getElementById("input-name");
-  var emailError = document.querySelector("#input-mail + span.error");
-  var inputCross = form.querySelectorAll(".cross");
-
-  var _iterator3 = _createForOfIteratorHelper(inputCross),
-      _step3;
+  var _iterator2 = _createForOfIteratorHelper(inputCross),
+      _step2;
 
   try {
-    for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
-      var cross = _step3.value;
+    for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+      var cross = _step2.value;
       cross.addEventListener("click", function (e) {
-        var tInput = event.target.nextElementSibling;
+        var tInput = e.target.nextElementSibling;
         tInput.value = "";
         clearError(tInput.getAttribute("type"));
       });
     }
   } catch (err) {
-    _iterator3.e(err);
+    _iterator2.e(err);
   } finally {
-    _iterator3.f();
+    _iterator2.f();
   }
 
-  email.addEventListener("input", function (event) {
-    if (email.validity.valid) {
-      clearError("email");
-    } else {
-      showError("email");
-    }
+  email.addEventListener("input", function (e) {
+    email.validity.valid ? clearError("email") : showError("email");
   });
 
   function clearError() {
@@ -229,33 +197,13 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  form.addEventListener("submit", function (event) {
+  form.addEventListener("submit", function (e) {
     // Если поле email валдно, позволяем форме отправляться
     if (!email.validity.valid) {
       // Если поле email не валидно, отображаем соответствующее сообщение об ошибке
       showError("email"); // Затем предотвращаем стандартное событие отправки формы
 
-      event.preventDefault();
-    }
-  });
-
-  function clearError() {
-    var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "email";
-
-    if (type === "email") {
-      emailError.textContent = "";
-      emailError.className = "error";
-      email.closest(".form-control").classList.remove("invalid");
-    }
-  }
-
-  form.addEventListener("submit", function (event) {
-    // Если поле email валдно, позволяем форме отправляться
-    if (!email.validity.valid) {
-      // Если поле email не валидно, отображаем соответствующее сообщение об ошибке
-      showError("email"); // Затем предотвращаем стандартное событие отправки формы
-
-      event.preventDefault();
+      e.preventDefault();
     }
   });
 
@@ -277,7 +225,35 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 });
-},{}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+
+function postsOpen() {
+  var postCont = document.querySelectorAll(".post-content");
+
+  var _iterator3 = _createForOfIteratorHelper(postCont),
+      _step3;
+
+  try {
+    for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+      var p = _step3.value;
+
+      if (!p.classList.contains("open")) {
+        p.classList.add("open");
+      }
+    }
+  } catch (err) {
+    _iterator3.e(err);
+  } finally {
+    _iterator3.f();
+  }
+}
+
+function postTrigger(e) {
+  if (e.target.dataset.text) {
+    var content = e.target.closest(".post-content");
+    content.classList.contains("open") ? content.classList.remove("open") : content.classList.add("open");
+  }
+}
+},{}],"../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -305,7 +281,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62425" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "6645" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -481,5 +457,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js","assets/js/main.js"], null)
+},{}]},{},["../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","assets/js/main.js"], null)
 //# sourceMappingURL=/main.cea5deef.js.map
