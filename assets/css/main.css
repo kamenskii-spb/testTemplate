@@ -294,6 +294,7 @@ main {
 }
 
 .sp-list {
+  font-weight: bold;
   margin-left: 80px;
   font-size: 18px;
   color: #4a8aba;
@@ -476,6 +477,16 @@ ol li span.dotted {
     .container {
         margin: 0 20px;
     }
+
+  .posts.featured .post,
+  .posts.category .post
+  {
+    height: 170px;
+  }
+
+  .posts .post-content {
+    top: 120px;
+  }
 
   .posts.category .post {
     width: 590px;
